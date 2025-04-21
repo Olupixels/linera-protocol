@@ -1,0 +1,23 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: Install and Build Linera
+    init: |
+      rustup update
+      cargo build -p linera-storage-service -p linera-service --bins
+    command: |
+      export PATH="$PWD/target/debug:$PATH"
+      echo "Run 'source <(linera net helper)' to begin using the CLI."
+      echo "Then start your local net with:"
+      echo "linera_spawn linera net up --with-faucet --faucet-port 8080"
+
+ports:
+  - port: 8080
+    onOpen: open-preview
+    visibility: public
+
+vscode:
+  extensions:
+    - rust-lang.rust-analyzer
+    - ms-azuretools.vscode-docker
